@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MyProject.Core.IRepository
@@ -9,7 +12,7 @@ namespace MyProject.Core.IRepository
 
         Task<T> GetAsync(K id);
 
-        IQueryable<T> GetAll();
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> predicates = null);
 
         T Insert(T entity);
 

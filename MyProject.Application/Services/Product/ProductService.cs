@@ -1,5 +1,7 @@
 ﻿using MyProject.Application.Services.Product.Dto;
 using MyProject.Core.IRepository;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyProject.Application.Services.Product
@@ -26,6 +28,18 @@ namespace MyProject.Application.Services.Product
 
             await _unitOfWork.SaveChangeAsync();
             return product;
+        }
+
+        public List<ProductDto> GetProducts()
+        {
+            var products = _productRepository.GetAll().Select(product => new ProductDto { 
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description
+            }).ToList();
+
+            return products;
         }
     }
 }

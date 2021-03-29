@@ -1,6 +1,9 @@
 ﻿using MyProject.Core.IRepository;
 using MyProject.Data.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MyProject.Data.Repository
@@ -31,10 +34,14 @@ namespace MyProject.Data.Repository
             return entity;
         }
 
-        public IQueryable<T> GetAll()
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicates = null)
         {
-            var entities = _dbContext.Set<T>().AsQueryable();
-            return entities;
+            IQueryable<T> entities = _dbContext.Set<T>();
+            if (predicates != null)
+            {
+                entities = entities.Where<T>(predicates);
+            }
+            return entities.AsQueryable();
         }
 
         public async Task<T> GetAsync(K id)

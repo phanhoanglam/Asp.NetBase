@@ -4,6 +4,7 @@ using MyProject.Application.Services.Product;
 using MyProject.Application.Services.Product.Dto;
 using MyProject.Core.Entity;
 using MyProject.Web.Controllers.ControllerBase;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyProject.Web.Controllers
@@ -23,6 +24,13 @@ namespace MyProject.Web.Controllers
         {
             var product = await _productService.CreateProduct(input);
             return Ok(product);
+        }
+
+        [HttpGet("GetAll")]
+        public List<ProductDto> GetProducts()
+        {
+            var products = _productService.GetProducts();
+            return products;
         }
     }
 }
